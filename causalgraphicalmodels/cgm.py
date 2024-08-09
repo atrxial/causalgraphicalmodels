@@ -1,7 +1,7 @@
 import networkx as nx
 import graphviz
 from itertools import combinations, chain
-from collections import Iterable
+from collections.abc import Iterable
 
 
 class CausalGraphicalModel:

@@ -66,6 +66,26 @@ class CausalGraphicalModel:
                 .format(classname=self.__class__.__name__,
                         vars=variables))
 
+    def add_node(self, node):
+        self.dag.add_node(node)
+        self.observed_variables = self.observed_variables | {node}
+        self.unobserved_variables = self.unobserved_variables | {node}
+
+    def add_edge(self, node1, node2):
+        self.dag.add_edge(node1, node2)
+        self.observed_variables = self.observed_variables | {node1, node2}
+        self.unobserved_variables = self.unobserved_variables | {node1, node2}
+
+    def remove_node(self, node):
+        self.dag.remove_node(node)
+        self.observed_variables = self.observed_variables - {node}
+        self.unobserved_variables = self.unobserved_variables - {node}
+
+    def remove_edge(self, node1, node2):
+        self.dag.remove_edge(node1, node2)
+        self.observed_variables = self.observed_variables - {node1, node2}
+        self.unobserved_variables = self.unobserved_variables - {node1, node2}
+
     def draw(self):
         """
         dot file representation of the CGM.
